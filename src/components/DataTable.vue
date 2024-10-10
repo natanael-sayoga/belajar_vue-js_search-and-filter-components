@@ -1,6 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <SearchBox @search="handleSearch" :placeholder-text="'Enter Post Title Or ID'"/>
+        <RadioFilter @radiofilter="handleRadioFilter" />
     </nav>
     <table class="table table-striped table-hover">
         <thead>
@@ -22,9 +23,11 @@
 <script setup>
 import { computed, defineProps, onMounted, reactive } from 'vue';
 import SearchBox from './SearchBox.vue';
+import RadioFilter from './RadioFilter.vue';
 
 let data = reactive({
-    keyword:""
+    searchFilter:"",
+    radioFilter:null
 })
 const props = defineProps({
     items:{
@@ -45,28 +48,33 @@ const headers = computed(
 
 const filteredItems = computed(
     () => {
-        return props.items.filter(item => item.title.includes(data.keyword) || item.id.toString().includes(data.keyword))
+        let filteredDatas = props.items
+        if(data.radioFilter != null){
+            filteredDatas.filter(item => item.completed == data.radioFilter)
+        }
+
+        return filteredDatas.filter(item => item.title.includes(data.searchFilter) || item.id.toString().includes(data.searchFilter))
     }
 )
 
 function handleSearch(title){
-    console.log(title)
-    data.keyword = title
+    //console.log(title)
+    data.searchFilter = title
+}
+
+function handleRadioFilter(value){
+    data.radioFilter = value
+    console.log(data.radioFilter)
 }
 
 onMounted(
     () => {
-        console.log(headers.value)
+        //console.log(headers.value)
     }
 )
 </script>
 
 <style scoped>
-/* .clickable_items :hover{
-    cursor: pointer;
-    background: mediumseagreen;
-} */
-
 tr:hover{
     cursor: pointer;
     background: mediumseagreen !important;

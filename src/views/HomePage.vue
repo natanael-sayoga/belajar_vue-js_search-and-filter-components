@@ -30,7 +30,6 @@ onBeforeMount(
         await api.getAllTodos()
         if(api.todos.length>0){
             data.todos = api.todos
-            console.log(data.todos.length)
         }else{
             data.error = api.error
         }
