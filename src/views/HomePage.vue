@@ -1,7 +1,10 @@
 <template>
-<DataTable v-bind:items="data.todos" v-if="data.todos.length>0">
-
-</DataTable>
+<div>
+    <DataTable 
+        v-bind:items="data.todos" 
+        v-if="data.todos.length>0">
+    </DataTable>
+</div>
 
 <div v-if="data.error!==null">
     <h4>ERROR DURING FETCH DATA!</h4>
@@ -11,8 +14,8 @@
 
 <script setup>
 import DataTable from '@/components/DataTable.vue';
-import { onBeforeMount, onMounted, reactive } from 'vue';
-import jsonplaceholderapi from '../services/jsonplaceholderapi'
+import { onBeforeMount, reactive, computed } from 'vue';
+import jsonplaceholderapi from '@/services/JSONplaceholderApi';
 
 let data = reactive({
     todos:[],
