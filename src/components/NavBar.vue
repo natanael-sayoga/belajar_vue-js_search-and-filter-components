@@ -6,6 +6,9 @@
             <li class="nav-item active">
                 <RouterLink v-bind:active-class="'active'" v-bind:to="`/`" class="nav-link" href="#">Home</RouterLink>
             </li>
+            <li class="nav-item active">
+                <RouterLink v-bind:active-class="'active'" v-bind:to="`/pagination`" class="nav-link" href="#">Pagination</RouterLink>
+            </li>
             <!-- <li class="nav-item">
                 <RouterLink v-bind:active-class="'active'" v-bind:to="`/`" class="nav-link" href="#">Fetch</RouterLink>
             </li> -->
