@@ -50,10 +50,16 @@ const filteredItems = computed(
     () => {
         let filteredDatas = props.items
         if(data.radioFilter != null){
-            filteredDatas.filter(item => item.completed == data.radioFilter)
+            console.log('filtered by radio', data.radioFilter)
+            filteredDatas = filteredDatas.filter(item => item.completed == data.radioFilter)
         }
 
-        return filteredDatas.filter(item => item.title.includes(data.searchFilter) || item.id.toString().includes(data.searchFilter))
+        if(data.searchFilter != ""){
+            console.log('filtered by title', data.searchFilter)
+            filteredDatas = filteredDatas.filter(item => item.title.includes(data.searchFilter) || item.id.toString().includes(data.searchFilter))
+        }
+
+        return filteredDatas
     }
 )
 
@@ -64,7 +70,6 @@ function handleSearch(title){
 
 function handleRadioFilter(value){
     data.radioFilter = value
-    console.log(data.radioFilter)
 }
 
 onMounted(
