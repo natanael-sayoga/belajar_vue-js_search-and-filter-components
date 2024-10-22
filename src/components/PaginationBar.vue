@@ -7,10 +7,9 @@
             </a>
         </li>
 
-        <select class="form-select" v-model="data.selected">
+        <select class="form-select" v-model="data.selected" v-on:change="goTo()">
             <option 
                 v-for="num in maxPageNumber" 
-                @click="goTo()"
                 :value="num">
                 {{ `Page ${num} out of ${maxPageNumber}` }}
             </option>
@@ -43,6 +42,10 @@ const props = defineProps({
     }
 })
 
+const emit = defineEmits([
+    'nextPage', 'prevPage', 'goTo'
+])
+
 const maxPageNumber = computed(
     () => {
         return Math.ceil(props.totalItems / props.itemPerPages)
@@ -52,19 +55,19 @@ const maxPageNumber = computed(
 function nextPage(){
     if(data.selected!=maxPageNumber.value){
         data.selected++
-        $emit('nextPage', data.selected)
+        emit('nextPage', data.selected)
     }
 }
 
 function prevPage(){
     if(data.selected!=1){
         data.selected--
-        $emit('prevPage', data.selected)
+        emit('prevPage', data.selected)
     }
 }
 
 function goTo(){
-    $emit('goTo', data.selected)
+    emit('goTo', data.selected)
 } 
 </script>
 

@@ -5,7 +5,10 @@
     </CustomTable>
     <PaginationBar 
         v-bind:totalItems="data.todos.length"
-        v-bind:itemPerPages="data.pagination.itemPerPage">
+        v-bind:itemPerPages="data.pagination.itemPerPage"
+        @nextPage="handleNextPage"
+        @prevPage="handlePrevPage"
+        @goTo="handleGoTo">
     </PaginationBar>
 </template>
 
@@ -29,6 +32,19 @@ const paginatedPage = computed(
         return data.todos.slice((data.pagination.currentPage - 1) * data.pagination.itemPerPage, data.pagination.currentPage * data.pagination.itemPerPage)
     }
 )
+
+//handling emitted event:
+function handleNextPage(pageNumber){
+    data.pagination.currentPage = pageNumber
+}
+
+function handlePrevPage(pageNumber){
+    data.pagination.currentPage = pageNumber
+}
+
+function handleGoTo(pageNumber){
+    data.pagination.currentPage = pageNumber
+}
 
 //const todos = jsonplaceholderapi
 const api = jsonplaceholderapi
