@@ -7,7 +7,7 @@
             </a>
         </li>
 
-        <select class="form-select" v-model="data.selected" v-on:change="goTo()">
+        <select class="form-select" v-model="selected" v-on:change="goTo()">
             <option 
                 v-for="num in maxPageNumber" 
                 :value="num">
@@ -25,8 +25,9 @@
 </template>
 
 <script setup>
-import { computed, defineProps, reactive } from 'vue';
+import { computed, defineProps, reactive, defineModel } from 'vue';
 
+const selected = defineModel('selected', {default:1})
 let data = reactive({
     selected:1
 })
@@ -53,21 +54,21 @@ const maxPageNumber = computed(
 )
 
 function nextPage(){
-    if(data.selected!=maxPageNumber.value){
-        data.selected++
-        emit('nextPage', data.selected)
+    if(selected.value!=maxPageNumber.value){
+        selected.value++
+        //emit('nextPage', data.selected)
     }
 }
 
 function prevPage(){
-    if(data.selected!=1){
-        data.selected--
-        emit('prevPage', data.selected)
+    if(selected.value!=1){
+        selected.value--
+        //emit('prevPage', data.selected)
     }
 }
 
 function goTo(){
-    emit('goTo', data.selected)
+    //emit('goTo', data.selected)
 } 
 </script>
 

@@ -4,14 +4,11 @@
     </nav>
     <CustomTable 
         v-bind:tableDatas="paginatedPage"
-        v-if="data.todos.length>0">
-    </CustomTable>
+        v-if="paginatedPage.length>0" />
     <PaginationBar 
-        v-bind:totalItems="data.todos.length"
+        v-bind:totalItems="filteredPage.length"
         v-bind:itemPerPages="data.pagination.itemPerPage"
-        @nextPage="handleNextPage"
-        @prevPage="handlePrevPage"
-        @goTo="handleGoTo">
+        v-model:selected="data.pagination.currentPage"
     </PaginationBar>
 </template>
 
@@ -36,11 +33,11 @@ let data = reactive({
 
 const paginatedPage = computed(
     () => {
-        //let filtered = filteredPage.value
-
         //everytime the currentPage is changed, we will slice the whole array then show them:
-        //return filtered.slice((data.pagination.currentPage - 1) * data.pagination.itemPerPage, data.pagination.currentPage * data.pagination.itemPerPage)
-        return data.todos.slice((data.pagination.currentPage - 1) * data.pagination.itemPerPage, data.pagination.currentPage * data.pagination.itemPerPage)
+        //return data.todos.slice((data.pagination.currentPage - 1) * data.pagination.itemPerPage, data.pagination.currentPage * data.pagination.itemPerPage)
+        
+        // console.log("paginated filtered page", data.filteredTodos.slice((data.pagination.currentPage - 1) * data.pagination.itemPerPage, data.pagination.currentPage * data.pagination.itemPerPage))
+        return data.filteredTodos.slice((data.pagination.currentPage - 1) * data.pagination.itemPerPage, data.pagination.currentPage * data.pagination.itemPerPage)
     }
 )
 
@@ -51,29 +48,30 @@ const filteredPage = computed(
             filteredPage = filteredPage.filter(item => item.title.includes(data.filter.searchFilter))
         }
 
-        console.log('filtered pages:', filteredPage)
         data.filteredTodos = filteredPage
         return filteredPage
     }
 )
 
 //handling emitted event:
-function handleNextPage(pageNumber){
-    data.pagination.currentPage = pageNumber
-}
+// function handleNextPage(pageNumber){
+//     data.pagination.currentPage = pageNumber
+//     console.log('change page to page', pageNumber)
+// }
 
-function handlePrevPage(pageNumber){
-    data.pagination.currentPage = pageNumber
-}
+// function handlePrevPage(pageNumber){
+//     data.pagination.currentPage = pageNumber
+//     console.log('change page to page', pageNumber)
+// }
 
-function handleGoTo(pageNumber){
-    data.pagination.currentPage = pageNumber
-}
+// function handleGoTo(pageNumber){
+//     data.pagination.currentPage = pageNumber
+//     console.log('change page to page', pageNumber)
+// }
 
 function handleSearch(keyword){
     data.filter.searchFilter = keyword
-    console.log('searcing for', data.filter.searchFilter)
-    console.log('title found:', filteredPage.value)
+    data.pagination.currentPage = 1
 }
 
 //const todos = jsonplaceholderapi
