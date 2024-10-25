@@ -1,6 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <SearchBox @search="handleSearch" :placeholderText="'Cari...'"/>
+        <DropdownFilter></DropdownFilter>
     </nav>
     <CustomTable 
         v-bind:tableDatas="paginatedPage"
@@ -18,6 +19,7 @@ import PaginationBar from '@/components/PaginationBar.vue';
 import { computed, onBeforeMount, reactive } from 'vue';
 import jsonplaceholderapi from '@/services/JSONplaceholderApi';
 import SearchBox from '@/components/SearchBox.vue';
+import DropdownFilter from '@/components/DropdownFilter.vue';
 
 let data = reactive({
     todos:[],
